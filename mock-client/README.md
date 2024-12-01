@@ -8,7 +8,7 @@ The way this is done is by http requests to the mock client, which based on the 
 (for example: number of requests, time between requests, countries) will result in a request(s) being
 sent to the transaction processing service.
 
-##Sample curl request:
+##Sample curl requests:
 
 ### Trigger 10 requests with 5 seconds between each request(default country is used: BG)
 ```
