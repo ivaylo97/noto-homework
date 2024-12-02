@@ -1,0 +1,13 @@
+FROM hirokimatsumoto/alpine-openjdk-11
+
+# These ENV vars can be overridden in docker-compose.yml
+ENV JAR_FILE=app.jar
+ENV DEBUG_MICROSERVICE=false
+
+# 8080 for HTTP, 8000 for remote debugging
+EXPOSE 8000 8080
+
+COPY ./docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+
+CMD ["/docker-entrypoint.sh", "$DEBUG"]
