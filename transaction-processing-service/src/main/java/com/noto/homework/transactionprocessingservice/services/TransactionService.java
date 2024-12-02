@@ -18,8 +18,17 @@ public class TransactionService {
 
     private final Set<ValidationRule> transactionValidationRules;
 
-    public void validate(Transaction transaction) {
+    public void processTransaction(Transaction transaction) {
+        log.info("Processing transaction: {}", transaction);
+        validate(transaction);
+        persistTransaction(transaction);
+    }
 
+    private void persistTransaction(Transaction transaction) {
+        log.info("Persisting transaction: {}", transaction);
+    }
+
+    private void validate(Transaction transaction) {
         transactionValidationRules.parallelStream()
                 .forEach(rule -> rule.apply(transaction));
         log.info("No fraudulent transactions detected.");

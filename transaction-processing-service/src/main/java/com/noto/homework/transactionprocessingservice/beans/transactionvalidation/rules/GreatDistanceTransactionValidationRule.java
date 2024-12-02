@@ -5,7 +5,7 @@ import com.noto.homework.transactionprocessingservice.model.Transaction;
 /**
  * Created by Ivaylo Sapunarov 
  */
-public class GreatDistanceTransactionValidationRule extends ValidationRule {
+public class GreatDistanceTransactionValidationRule implements ValidationRule {
 
     @Override
     public void apply(Transaction transaction) {

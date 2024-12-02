@@ -33,10 +33,10 @@ public class TransactionProcessingServiceController {
     public ResponseEntity<String> process(@RequestBody Transaction transaction) {
         log.info("Processing transaction: {}", transaction);
         try {
-            transactionService.validate(transaction);
+            transactionService.processTransaction(transaction);
             return ResponseEntity.ok().body("OK");
         } catch (FraudTransactionDetectedException e) {
-            log.info("Transaction: {} is fraudulent due to: {}", transaction, e.getMessage());
+            log.info("Transaction: {} failed fraudulence checks due to: {}", transaction, e.getMessage());
             return ResponseEntity.ok().body("Transaction: " + transaction + " is fraudulent due to: " + e.getMessage());
         } catch (Exception e) {
             log.error("Failed to process transaction: {} due to: {}", transaction, e.getMessage());

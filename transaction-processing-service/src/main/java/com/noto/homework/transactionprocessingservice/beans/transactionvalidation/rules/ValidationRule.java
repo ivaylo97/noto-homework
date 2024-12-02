@@ -3,9 +3,10 @@ package com.noto.homework.transactionprocessingservice.beans.transactionvalidati
 import com.noto.homework.transactionprocessingservice.model.Transaction;
 
 /**
- * Created by Ivaylo Sapunarov 
+ * Common interface for all validation rules.
+ * <p>
+ * Created by Ivaylo Sapunarov
  */
-public abstract class ValidationRule {
-    
-        public abstract void apply(Transaction transaction);
+public interface ValidationRule {
+    void apply(Transaction transaction);
 }

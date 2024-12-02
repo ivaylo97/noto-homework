@@ -10,6 +10,7 @@ import java.time.ZonedDateTime;
  * <p>
  * Created by Ivaylo Sapunarov
  */
+@Getter
 @Builder
 @ToString
 @NoArgsConstructor
