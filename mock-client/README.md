@@ -12,10 +12,10 @@ sent to the transaction processing service.
 
 ### Trigger 10 requests with 5 seconds between each request(default country is used: BG)
 ```
-curl -X GET http://localhost:8080/mock-client/api/trigger?intervalBetweenRequests=5000&numberOfRequests=10
+curl -X GET 'http://localhost:8081/mock-client/api/trigger?intervalBetweenRequests=5000&numberOfRequests=10'
 ```
 
 ### Trigger one request for each of the countries US, UK, DE with 5 seconds between each request.
 ```
-curl -X GET http://localhost:8080/mock-client/api/trigger?intervalBetweenRequests=5000&countries=US&countries=UK&countries=DE
+curl -X GET http://localhost:8081/mock-client/api/triggerForCountries?intervalBetweenRequests=5000&countries=US&countries=UK&countries=DE
 ```

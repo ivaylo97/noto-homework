@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Represents the mappings of countries and their respective coordinates.
  * <p>
- * Created by Ivaylo Sapunarov - Delta Source Bulgaria on 12/1/24.
+ * Created by Ivaylo Sapunarov
  */
 @ConstructorBinding
 @RequiredArgsConstructor

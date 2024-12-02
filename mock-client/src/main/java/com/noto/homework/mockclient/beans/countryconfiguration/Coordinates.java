@@ -7,7 +7,7 @@ import lombok.ToString;
 /**
  * Represents pairs of latitude and longitude coordinates.
  * <p>
- * Created by Ivaylo Sapunarov - Delta Source Bulgaria on 12/1/24.
+ * Created by Ivaylo Sapunarov
  */
 @Getter
 @ToString

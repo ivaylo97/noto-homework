@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Defines endpoints from which we can trigger requests to the transaction processing application.
  * <p>
- * Created by Ivaylo Sapunarov - Delta Source Bulgaria on 12/1/24.
+ * Created by Ivaylo Sapunarov
  */
 @Slf4j
 @RestController
@@ -28,11 +28,12 @@ public class MockClientController {
 
 	@GetMapping("/trigger")
 	public ResponseEntity<String> triggerRequests(@RequestParam("intervalBetweenRequests") Long intervalBetweenRequests,
-												  @RequestParam(value = "numberOfRequests") Integer numberOfRequests) {
+												  @RequestParam("numberOfRequests") Integer numberOfRequests) {
 		try {
 			log.info("Triggering {} requests with interval: {}", numberOfRequests, intervalBetweenRequests);
 			requestSpewer.spewRequestByNumber(numberOfRequests, intervalBetweenRequests);
-			return ResponseEntity.ok("Transactions set successfully!");
+			log.info("Transactions sent successfully!");
+			return ResponseEntity.ok("Transactions sent successfully!");
 		} catch (Exception e) {
 			log.error("Failed to send transactions for params - interval: {}, requests: {} due to: {}",
 				intervalBetweenRequests, numberOfRequests, e.getMessage());
@@ -50,7 +51,8 @@ public class MockClientController {
 			log.info("Triggering {} requests with interval: {}, with countries: {}",
 				countries.size(), intervalBetweenRequests, countries);
 			requestSpewer.spewRequestByCountry(intervalBetweenRequests, countries);
-			return ResponseEntity.ok("Transactions set successfully!");
+			log.info("Transactions sent successfully!");
+			return ResponseEntity.ok("Transactions sent successfully!");
 		} catch (Exception e) {
 			log.error("Failed to send transactions for params - interval: {} countries: {} due to: {}",
 				intervalBetweenRequests, countries, e.getMessage());

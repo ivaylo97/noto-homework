@@ -1,11 +1,9 @@
-package com.noto.homework.mockclient.domain;
+package com.noto.homework.transactionprocessingservice.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+
 import java.time.ZonedDateTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 /**
  * Represents a transaction that will be sent to the server application.

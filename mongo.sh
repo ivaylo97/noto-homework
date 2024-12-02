@@ -1,0 +1,1 @@
+docker-compose -f ./docker-compose.yml exec db-mongo mongosh -u mongo_user -p mongo_password
