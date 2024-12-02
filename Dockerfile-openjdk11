@@ -1,4 +1,4 @@
-FROM hirokimatsumoto/alpine-openjdk-11
+FROM adoptopenjdk:11-jre-hotspot
 
 # These ENV vars can be overridden in docker-compose.yml
 ENV JAR_FILE=app.jar
