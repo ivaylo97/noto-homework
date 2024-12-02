@@ -1,5 +1,6 @@
 package com.noto.homework.transactionprocessingservice.controller;
 
+import com.noto.homework.transactionprocessingservice.exceptions.FraudTransactionDetectedException;
 import com.noto.homework.transactionprocessingservice.model.Transaction;
 import com.noto.homework.transactionprocessingservice.services.TransactionService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,15 @@ public class TransactionProcessingServiceController {
     @PostMapping("/process")
     public ResponseEntity<String> process(@RequestBody Transaction transaction) {
         log.info("Processing transaction: {}", transaction);
-        return ResponseEntity.ok("Transaction processed successfully!");
+        try {
+            transactionService.validate(transaction);
+            return ResponseEntity.ok().body("OK");
+        } catch (FraudTransactionDetectedException e) {
+            log.info("Transaction: {} is fraudulent due to: {}", transaction, e.getMessage());
+            return ResponseEntity.ok().body("Transaction: " + transaction + " is fraudulent due to: " + e.getMessage());
+        } catch (Exception e) {
+            log.error("Failed to process transaction: {} due to: {}", transaction, e.getMessage());
+            return ResponseEntity.internalServerError().body("Failed to process transaction: " + transaction + " due to: " + e.getMessage());
+        }
     }
 }
