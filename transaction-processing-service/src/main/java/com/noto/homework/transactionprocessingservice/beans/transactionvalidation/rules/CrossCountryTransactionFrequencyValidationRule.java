@@ -1,10 +1,9 @@
 package com.noto.homework.transactionprocessingservice.beans.transactionvalidation.rules;
 
 import com.noto.homework.transactionprocessingservice.exceptions.FraudTransactionDetectedException;
-import com.noto.homework.transactionprocessingservice.model.Transaction;
+import com.noto.homework.transactionprocessingservice.model.TransactionTO;
 import com.noto.homework.transactionprocessingservice.repositories.MongoRepository;
 import lombok.RequiredArgsConstructor;
-import org.bson.Document;
 import org.springframework.stereotype.Component;
 
 import java.time.ZonedDateTime;
@@ -22,13 +21,14 @@ public class CrossCountryTransactionFrequencyValidationRule implements Validatio
     private final MongoRepository mongoRepository;
 
     @Override
-    public void apply(Transaction transaction) {
-        long userId = transaction.getUserId();
+    public void apply(TransactionTO transactionTO) {
+        long userId = transactionTO.getUserId();
         ZonedDateTime timestamp = ZonedDateTime.now().minusMinutes(10);
-        List<Document> transactions =
-                mongoRepository.fetchTransactionsDistinctByCountryAfterTimestamp(userId, timestamp);
-        if (transactions.size() > 3) {
-            throw new FraudTransactionDetectedException("Fraudulent cross-country transaction detected: " + transaction);
+        List<String> transactionCountries =
+                mongoRepository.fetchDistinctTransactionCountriesAfterTimestamp(userId, timestamp);
+        if (transactionCountries.size() > 2) {
+            throw new FraudTransactionDetectedException(
+                    "Fraudulent cross-country transaction detected for user: " + transactionTO.getUserId());
         }
     }
 }

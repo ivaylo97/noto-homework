@@ -10,9 +10,9 @@
 	</parent>
 
 	<groupId>com.noto.homework</groupId>
-	<artifactId>transaction-processing-service</artifactId>
+	<artifactId>transactionTO-processing-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>transaction-processing-service</name>
+	<name>transactionTO-processing-service</name>
 	<description>Project that processes transactions from various locations</description>
 
 	<properties>
@@ -54,8 +54,13 @@
 			<artifactId>mongock-springboot</artifactId>
 			<version>${mongock.version}</version>
 		</dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>
@@ -75,6 +80,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>transaction-processing-service</finalName>
+		<finalName>transactionTO-processing-service</finalName>
 	</build>
 </project>

@@ -1,6 +1,6 @@
 package com.noto.homework.transactionprocessingservice.beans.transactionvalidation.rules;
 
-import com.noto.homework.transactionprocessingservice.model.Transaction;
+import com.noto.homework.transactionprocessingservice.model.TransactionTO;
 
 /**
  * Common interface for all validation rules.
@@ -8,5 +8,5 @@ import com.noto.homework.transactionprocessingservice.model.Transaction;
  * Created by Ivaylo Sapunarov
  */
 public interface ValidationRule {
-    void apply(Transaction transaction);
+    void apply(TransactionTO transactionTO);
 }

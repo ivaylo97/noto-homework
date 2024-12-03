@@ -1,7 +1,7 @@
 package com.noto.homework.transactionprocessingservice.controller;
 
 import com.noto.homework.transactionprocessingservice.exceptions.FraudTransactionDetectedException;
-import com.noto.homework.transactionprocessingservice.model.Transaction;
+import com.noto.homework.transactionprocessingservice.model.TransactionTO;
 import com.noto.homework.transactionprocessingservice.services.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.security.PermitAll;
 
 /**
- * Exposes endpoints, from which the application can receive {@link Transaction}s for processing.
+ * Exposes endpoints, from which the application can receive {@link TransactionTO}s for processing.
  * <p>
  * Created by Ivaylo Sapunarov
  */
@@ -30,17 +30,17 @@ public class TransactionProcessingServiceController {
 
     @PermitAll
     @PostMapping("/process")
-    public ResponseEntity<String> process(@RequestBody Transaction transaction) {
-        log.info("Processing transaction: {}", transaction);
+    public ResponseEntity<String> process(@RequestBody TransactionTO transactionTO) {
+        log.info("Processing transactionTO: {}", transactionTO);
         try {
-            transactionService.processTransaction(transaction);
+            transactionService.processTransaction(transactionTO);
             return ResponseEntity.ok().body("OK");
         } catch (FraudTransactionDetectedException e) {
-            log.info("Transaction: {} failed fraudulence checks due to: {}", transaction, e.getMessage());
-            return ResponseEntity.ok().body("Transaction: " + transaction + " is fraudulent due to: " + e.getMessage());
+            log.info("TransactionTO: {} failed fraudulence checks due to: {}", transactionTO, e.getMessage());
+            return ResponseEntity.ok().body("TransactionTO: " + transactionTO + " is fraudulent due to: " + e.getMessage());
         } catch (Exception e) {
-            log.error("Failed to process transaction: {} due to: {}", transaction, e.getMessage());
-            return ResponseEntity.internalServerError().body("Failed to process transaction: " + transaction + " due to: " + e.getMessage());
+            log.error("Failed to process transactionTO: {} due to: {}", transactionTO, e.getMessage());
+            return ResponseEntity.internalServerError().body("Failed to process transactionTO: " + transactionTO + " due to: " + e.getMessage());
         }
     }
 }

@@ -15,7 +15,7 @@ import java.time.ZonedDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Transaction {
+public class TransactionTO {
 
     @JsonProperty("user_id")
     private long userId;

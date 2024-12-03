@@ -1,11 +1,11 @@
 package com.noto.homework.transactionprocessingservice.beans.transactionvalidation.rules;
 
 import com.noto.homework.transactionprocessingservice.exceptions.FraudTransactionDetectedException;
-import com.noto.homework.transactionprocessingservice.model.Transaction;
+import com.noto.homework.transactionprocessingservice.model.TransactionTO;
 import com.noto.homework.transactionprocessingservice.repositories.MongoRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Verifies that the transaction is not from a blacklisted country.
@@ -15,16 +15,17 @@ import java.util.Set;
 @Component
 public class BlackListedTransactionValidationRule implements ValidationRule {
 
-    private final Set<String> blacklistedCountries;
+    private final MongoRepository mongoRepository;
 
     public BlackListedTransactionValidationRule(MongoRepository mongoRepository) {
-        this.blacklistedCountries = Set.copyOf(mongoRepository.fetchBlacklistedCountries());
+        this.mongoRepository = mongoRepository;
     }
 
     @Override
-    public void apply(Transaction transaction) {
-        if (blacklistedCountries.contains(transaction.getCountry())) {
-            throw new FraudTransactionDetectedException("Transaction is from blacklisted country: " + transaction.getCountry());
+    public void apply(TransactionTO transactionTO) {
+        List<String> blacklistedCountries = mongoRepository.fetchBlacklistedCountries();
+        if (blacklistedCountries.contains(transactionTO.getCountry())) {
+            throw new FraudTransactionDetectedException("TransactionTO is from blacklisted country: " + transactionTO.getCountry());
         }
     }
 }
