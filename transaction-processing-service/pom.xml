@@ -80,6 +80,6 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		<finalName>transactionTO-processing-service</finalName>
+		<finalName>transaction-processing-service</finalName>
 	</build>
 </project>
