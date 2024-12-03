@@ -25,6 +25,8 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class TransactionRequestSpewer {
 
+	private static final String OK_RESPONSE = "OK";
+
 	private static final String DEFAULT_COUNTRY = "Bulgaria";
 
 	private final RestTemplate restTemplate;
@@ -52,27 +54,36 @@ public class TransactionRequestSpewer {
 	public void spewRequestByNumber(int numberOfRequests, long intervalBetweenRequests)
 		throws InterruptedException, JsonProcessingException {
 		for (int requestNumber = 0; requestNumber < numberOfRequests; requestNumber++) {
+			Thread.sleep(intervalBetweenRequests);
 			Transaction transaction = buildTransaction(DEFAULT_COUNTRY);
 			sendRequest(transaction);
-			Thread.sleep(intervalBetweenRequests);
+			ResponseEntity<String> response = sendRequest(transaction);
+			checkResponse(response, transaction);
 		}
 	}
 
 	public void spewRequestByCountry(long intervalBetweenRequests, List<String> countries)
 		throws InterruptedException, JsonProcessingException {
 		for(String country : countries) {
-			Transaction transaction = buildTransaction(country);
-			sendRequest(transaction);
 			Thread.sleep(intervalBetweenRequests);
+			Transaction transaction = buildTransaction(country);
+			ResponseEntity<String> response = sendRequest(transaction);
+			checkResponse(response, transaction);
 		}
 	}
 
-	private void sendRequest(Transaction transaction) throws JsonProcessingException {
+	private void checkResponse(ResponseEntity<String> response, Transaction transaction) {
+		if (!OK_RESPONSE.equals(response.getBody())) {
+			log.error("Fraudulent transaction detected: {}", transaction);
+		}
+	}
+
+	private ResponseEntity<String> sendRequest(Transaction transaction) throws JsonProcessingException {
 		HttpHeaders httpHeaders = new HttpHeaders();
 		httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 		String body = objectMapper.writeValueAsString(transaction);
 		HttpEntity<String> httpEntity = new HttpEntity<>(body, httpHeaders);
-		restTemplate.postForEntity(transactionServiceUrl, httpEntity, String.class);
+		return restTemplate.postForEntity(transactionServiceUrl, httpEntity, String.class);
 	}
 
 	private Transaction buildTransaction(String country) {

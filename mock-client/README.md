@@ -17,5 +17,5 @@ curl -X GET 'http://localhost:8081/mock-client/api/trigger?intervalBetweenReques
 
 ### Trigger one request for each of the countries US, UK, DE with 5 seconds between each request.
 ```
-curl -X GET http://localhost:8081/mock-client/api/triggerForCountries?intervalBetweenRequests=5000&countries=US&countries=UK&countries=DE
+curl -X GET 'http://localhost:8081/mock-client/api/triggerForCountries?intervalBetweenRequests=5000&countries=US&countries=UK&countries=DE'
 ```

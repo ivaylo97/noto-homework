@@ -27,7 +27,6 @@ public class TransactionService {
     private final MongoRepository mongoRepository;
 
     public void processTransaction(TransactionTO transactionTO) {
-        log.info("Processing transactionTO: {}", transactionTO);
         persistTransaction(transactionTO);
         validate(transactionTO);
     }
